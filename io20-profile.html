@@ -10,11 +10,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="stylesheet" href="./io20-profile.css" media="screen" charset="utf-8">
 <!--
-An element which helps you build your profile page
+An element which helps you build your profile page by just passing some arguments
 
 Example:
 
     <io20-profile></io20-profile>
+
+`io20-profile` uses `user` object for all the fields except static background
+
+Example:
+
+    <io20-profile user="{name:'Vikram Tiwari'}"></io20-profile>
 
 @group Seed Elements
 @element io20-profile
@@ -42,19 +48,19 @@ Example:
 		<aside class="profile-card">
 			<header>
 				<!-- here’s the avatar -->
-				<a href="https://google.com/+VikramTiwari/">
+				<a href="{{user.topLink}}">
 					<img src="{{user.image}}" />
 				</a>
 				<!-- the username -->
 				<h1>{{user.name}}</h1>
-				<!-- and role or location -->
+				<!-- user quote or basic info -->
 				<h2>{{user.quote}}</h2>
 
 			</header>
 
 			<!-- bit of a bio; who are you? -->
 			<div class="profile-bio">
-				<p>{{user.info}}</p>
+				<p>{{user.bio}}</p>
 				<!-- REVIEW: https://en.wikipedia.org/wiki/Vi_veri_universum_vivus_vici -->
 			</div>
 			<ul class="profile-social-links">
@@ -95,58 +101,26 @@ Example:
 		is: 'io20-profile',
 
 		properties: {
-
 			/**
-			 * `fancy` indicates that the element should don a monocle and tophat,
-			 * while checking its pocket watch.
-			 */
-			fancy: Boolean,
-
-			/**
-			 * Describes the author of the element, but is really just an excuse to
-			 * show off JSDoc annotations.
+			 * Provides user details to customize the profile for yourself.
+			 * Options are `name`, `quote`, `bio`, `image`, `topLink`, `fb`, `twitter` and `github`.
 			 *
-			 * @type {{name: string, image: string}}
+			 * @attribute user
+			 * @type object
+			 * @default ''
 			 */
-			author: {
-				type: Object,
-				// Use `value` to provide a default value for a property, by setting it
-				// on your element's prototype.
-				//
-				// If you provide a function, as we do here, Polymer will call that
-				// _per element instance_.
-				//
-				// We do that to ensure that each element gets its own copy of the
-				// value, rather than having it shared across all instances (via the
-				// prototype).
-				value: function() {
-					return {
-						name: 'Dimitri Glazkov',
-						image: 'https://pbs.twimg.com/profile_images/665654594702319617/HCxXVrX3_400x400.jpg',
-					};
-				}
-			},
 			user: {
 				type: Object,
-				// Use `value` to provide a default value for a property, by setting it
-				// on your element's prototype.
-				//
-				// If you provide a function, as we do here, Polymer will call that
-				// _per element instance_.
-				//
-				// We do that to ensure that each element gets its own copy of the
-				// value, rather than having it shared across all instances (via the
-				// prototype).
 				value: function() {
 					return {
 						name: 'Vikram Tiwari',
 						quote: 'Hey Dreamer! Let\'s Create.',
+						bio: 'Vi Veri Veniversum Vivus Vici - V',
 						image: 'https://pbs.twimg.com/profile_images/665654594702319617/HCxXVrX3_400x400.jpg',
-						imageLink: 'https://google.com/+VikramTiwari',
+						topLink: 'https://google.com/+VikramTiwari',
 						fb: 'https://facebook.com/vikram.tiwari.falcon',
 						twitter: 'https://twitter.com/VikramTiwari',
 						github: 'https://github.com/VikramTiwari',
-						info: 'Vi Veri Veniversum Vivus Vici - V'
 					};
 				}
 			},
@@ -178,39 +152,6 @@ Example:
 			// removed from a document.
 			//
 			// Use this to clean up anything you did in `attached`.
-		},
-
-		// Element Behavior
-
-		/**
-		 * The `io20-profile-lasers` event is fired whenever `fireLasers` is called.
-		 *
-		 * @event io20-profile-lasers
-		 * @detail {{sound: String}}
-		 */
-
-		/**
-		 * Sometimes it's just nice to say hi.
-		 *
-		 * @param {string} greeting A positive greeting.
-		 * @return {string} The full greeting.
-		 */
-		sayHello: function(greeting) {
-			var response = greeting || 'Hello World!';
-			return 'io20-profile says, ' + response;
-		},
-
-		/**
-		 * Attempt to destroy this element's enemies with a beam of light!
-		 *
-		 * Or, at least, dispatch an event in the vain hope that someone else will
-		 * do the zapping.
-		 */
-		fireLasers: function() {
-			this.fire('io20-profile-lasers', {
-				sound: 'Pew pew!'
-			});
 		}
-
 	});
 </script>
